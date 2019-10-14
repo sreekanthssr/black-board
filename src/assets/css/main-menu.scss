@@ -1,0 +1,80 @@
+.main-menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    div{
+        padding: 10px 2px;
+        i.fa{
+            font-size: 36px;
+            color: #333;
+            border: 2px solid transparent;
+            &:hover{
+                color: $brand-color;
+            }
+        }        
+        
+        .fa-circle-small {
+            font-size: 10px !important;
+        }
+        .fa-circle-medium {
+            font-size: 20px !important;
+        }        
+        .fa-circle-big {
+            font-size: 30px !important;
+        }
+        .fa-circle {
+            &:hover{
+                border: 2px solid #000;                
+                border-radius: 24px;
+            }
+        }
+        .black{
+            color: #000 !important;
+            &:hover{
+                color: #000 !important;
+            }
+        }
+        .green{
+            color: #00FF00 !important;
+            &:hover{
+                color: $brand-color;
+            }
+        }
+        .red{
+            color: #FF0000 !important; 
+            &:hover{
+                color: $brand-color;
+            }
+        }
+        .blue{
+            color: #0000FF !important;
+            &:hover{
+                color: $brand-color;
+            }
+        }
+        .cyan{
+            color: #009999 !important;
+            &:hover{
+                color: $brand-color;
+            }
+        }
+        .orang{
+            color: #ff6600 !important;
+            &:hover{
+                color: $brand-color;
+            }
+        }
+        .yellow{
+            color: #FFFF00 !important;
+            &:hover{
+                color: $brand-color;
+            }
+        }
+        
+    }
+    .pageName {
+        width: 300px;
+        text-align: center;
+    }
+    
+}
