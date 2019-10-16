@@ -1,0 +1,6 @@
+.drawing-canvas-main{
+    &.ruled{
+        background-image: url('../images/ruled.svg'); 
+        background-repeat: repeat-y;
+    }
+}

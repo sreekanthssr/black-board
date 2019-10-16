@@ -14,38 +14,22 @@ class App extends React.Component{
     this.setCurrentColorAndSize = this.setCurrentColorAndSize.bind(this);
   }
 
-  setCanvas(canvas){
+  setCanvas(canvas,done){
     this.setState({
       canvas
-    }, this.drawingPropChanged);
+    }, () =>{
+      done(this.state.canvas);
+    });
   }
 
   setCurrentBrushType(currentBrushType){
-    this.setState({currentBrushType}, this.drawingPropChanged);
+    this.setState({currentBrushType});
   }
 
   setCurrentColorAndSize(currentColor,currentSize){
-    this.setState({currentColor, currentSize}, this.drawingPropChanged);
+    this.setState({currentColor, currentSize});
   }
 
-  drawingPropChanged(){
-    let canvas = this.state.canvas;
-    let color = this.state.currentColor;
-    let size = this.state.currentSize;
-
-    canvas.freeDrawingBrush = new fabric['PencilBrush'](canvas);
-    canvas.freeDrawingBrush.color = color;
-    canvas.freeDrawingBrush.width = parseInt(size, 10) || 1;
-    canvas.freeDrawingBrush.shadow = new fabric.Shadow({
-      blur: parseInt(0, 10) || 0,
-      offsetX: 0,
-      offsetY: 0,
-      affectStroke: true,
-      color: color,
-    });
-    
-    console.log(color,size,canvas);
-  }
 
   render(){
     return (<div >
@@ -54,7 +38,7 @@ class App extends React.Component{
       />
       <FabricComponent  setCanvas={this.setCanvas} 
                         canvas={this.state.canvas} 
-                        color={this.state.currentBrushType} 
+                        color={this.state.currentColor} 
                         size={this.state.currentSize} 
                         brushType = {this.state.currentBrushType}
       />
