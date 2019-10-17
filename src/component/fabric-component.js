@@ -8,7 +8,7 @@ export default class FabricComponent extends React.Component{
             isDrawingMode: true,
             backgroundColor: "transparent"
         }),(canvas) =>{
-           canvas.setDimensions({width: '98vw', height: '98vh'}, {cssOnly: true})
+           canvas.setDimensions({width: '97vw', height: '101vh'}, {cssOnly: true})
         });
         ;
     }

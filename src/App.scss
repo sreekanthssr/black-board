@@ -1,21 +1,12 @@
-@import './assets/css/fontawesome.min.scss';
-@import './assets/css/brands.min.scss';
-@import './assets/css/solid.min.scss';
+@import './assets/scss/fontawesome.min.scss';
+@import './assets/scss/brands.min.scss';
+@import './assets/scss/solid.min.scss';
+
+@import './assets/scss/variables.scss';
+@import './assets/scss/app.scss';
 
 
-$brand-color:#ca2eaf;
 
-@import './assets/css/main-menu.scss';
-@import './assets/css/canvas.scss';
+@import './assets/scss/main-menu.scss';
+@import './assets/scss/canvas.scss';
 
-
-.logo {
-  height: 40vmin;
-}
-
-.header {
-}
-
-.link {
-  color: #09d3ac;
-}

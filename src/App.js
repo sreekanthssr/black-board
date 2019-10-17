@@ -32,7 +32,7 @@ class App extends React.Component{
 
 
   render(){
-    return (<div >
+    return (<div className="main-container">
       <MainMenuComponent  setCurrentBrushType = {this.setCurrentBrushType} 
                           setCurrentColorAndSize = {this.setCurrentColorAndSize} 
       />
