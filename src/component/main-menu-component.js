@@ -7,7 +7,9 @@ export default class MainMenuComponent extends React.Component
         this.state = {"brushClass" : 'fa-pen'};
         this.menuClick = this.menuClick.bind(this);
         this.setColorAndSize = this.setColorAndSize.bind(this);
-        this.setBrushType = this.setBrushType.bind(this);
+        this.setBrushType = this.setBrushType.bind(this);        
+        this.setCurrentColor = this.setCurrentColor.bind(this);        
+        this.setCurrentSize = this.setCurrentSize.bind(this);
     }
 
     menuClick(e,type){
@@ -17,7 +19,16 @@ export default class MainMenuComponent extends React.Component
     }    
 
     setColorAndSize(e,size,color){
-        this.props.setCurrentColorAndSize(color,size);
+        this.props.setCurrentColor(color);        
+        this.props.setCurrentSize(size);
+    }
+
+    setCurrentSize(e){             
+        this.props.setCurrentSize(e.target.value);
+    }
+
+    setCurrentColor(e){
+        this.props.setCurrentColor(e.target.value); 
     }
 
     setBrushType(e,brush){
@@ -55,8 +66,16 @@ export default class MainMenuComponent extends React.Component
                     <div><i className="fa fa-circle fa-circle-big cyan" onClick={(e) => this.setColorAndSize(e,'30','#009999')}></i></div>
                     <div><i className="fa fa-circle fa-circle-big orang" onClick={(e) => this.setColorAndSize(e,'30','#ff6600')}></i></div>
                     <div><i className="fa fa-circle fa-circle-big yellow" onClick={(e) => this.setColorAndSize(e,'30','#FFFF00')}></i></div>
-                    <div><i className="fa fa-circle fa-circle-medium black" onClick={(e) => this.setColorAndSize(e,'15','#000')}></i></div>
-                    <div><i className="fa fa-circle black" onClick={(e) => this.menuClick(e,'big-black')}></i></div>
+                    <div className="toolList">
+                        <span className="size-span">{this.props.size}</span>
+                        <ul>
+                            <li><input type="range" min="5" max="50" onChange={(e) => this.setCurrentSize(e)}/></li>
+                        </ul>
+                    </div>
+                    <div>
+                        {/* <i className="fa fa-fill-drip"></i> */}
+                        <input className="color-picker"  style={{color:this.props.color}} type="color" value={this.props.color}  onChange={(e) => this.setCurrentColor(e)}/>
+                    </div>
                     <div className="toolList">
                         <i className={`fa ${this.state.brushClass}`}></i>
                         <ul>

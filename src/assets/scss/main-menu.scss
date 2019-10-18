@@ -19,8 +19,7 @@
                 &:hover{
                     color: $brand-color;
                 }
-            }        
-            
+            }
             .fa-circle-small {
                 font-size: 10px !important;
             }
@@ -84,11 +83,38 @@
             width: 300px;
             text-align: center;
         }
+        .color-picker{
+            -webkit-appearance: none;
+            width: 36px;
+            height: 0px;
+            border:none;
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            font-size: 36px;
+            padding: 0;
+        }
+        .color-picker::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        .color-picker::-webkit-color-swatch {
+            border: none;
+        } 
+        .color-picker::before{
+            content: "\f576";
+        }
         .toolList{
             position: relative;
-            .down-arrow{
-
+            .size-span{
+                font-size: 18px;
+                display: inline-block;
+                width: 35px;
+                border: 1px solid #ccc;
+                text-align: center;
+                margin-top: 3px;
+                height: 26px;
+                font-weight: 600;
             }
+
             ul{
                 position: absolute;
                 top: 50px;
