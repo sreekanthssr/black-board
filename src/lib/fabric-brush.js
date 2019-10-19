@@ -14,14 +14,14 @@ export default class FabricBrush{
         let brush = this._getBrushProp();
         this.options.canvas.freeDrawingBrush = new fabric[brush.brushType](this.options.canvas);
         
-        this.options.canvas.freeDrawingBrush.color = this.options.color;
+        this.options.canvas.freeDrawingBrush.color = brush.color;
         this.options.canvas.freeDrawingBrush.width = parseInt(this.options.size, 10) || 1;
         this.options.canvas.freeDrawingBrush.shadow = new fabric.Shadow({
             blur: parseInt(brush.blur, 10) || 0,
             offsetX: 0,
             offsetY: 0,
             affectStroke: true,
-            color: this.options.color,
+            color: brush.color,
         });
     }
 
@@ -48,16 +48,19 @@ export default class FabricBrush{
         let brush = {};
         switch(this.options.brushType){
             case 'pen':
-                brush = {brushType : "PencilBrush", blur : 5};
+                brush = {brushType : "PencilBrush", blur : 5, color : this.options.color};
                 break;
             case 'pencil':
-                brush = {brushType : "PencilBrush", blur : 1};
+                brush = {brushType : "PencilBrush", blur : 0, color : this.options.color};
                 break;
             case 'brush':
-                brush = {brushType : "SprayBrush", blur : 10};
+                brush = {brushType : "SprayBrush", blur : 10, color : this.options.color};
+                break;
+            case 'highlighter':
+                brush = {brushType : "PencilBrush", blur : 2, color : this.options.color+'aa'};
                 break;
             default:
-                brush = {brushType : "PencilBrush", blur : 1};
+                brush = {brushType : "PencilBrush", blur : 1, color : this.options.color};
         }
         return brush;
     }

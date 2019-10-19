@@ -39,6 +39,10 @@ export default class MainMenuComponent extends React.Component
                 break;
             case 'brush':
                 brushClass = 'fa-paint-brush';
+                
+            case 'highlighter':
+                    brushClass = 'fa-highlighter';
+                    break;
                 break;
             default:
                 brushClass = 'fa-pen';
@@ -81,6 +85,7 @@ export default class MainMenuComponent extends React.Component
                             <li><i className="fa fa-pen" onClick={(e) => this.setBrushType(e,'pen')}></i>Pen</li>
                             <li><i className="fa fa-pencil-alt" onClick={(e) => this.setBrushType(e,'pencil')}></i>Pencil</li>
                             <li><i className="fa fa-paint-brush" onClick={(e) => this.setBrushType(e,'brush')}></i>Brush</li>
+                            <li><i className="fa fa-highlighter" onClick={(e) => this.setBrushType(e,'highlighter')}></i>Highlighter</li>
                         </ul>
                     </div>
                     <div><i className="fa fa-eraser" onClick={(e) => this.menuClick(e,'eraser')}></i></div>
