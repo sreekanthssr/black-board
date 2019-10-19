@@ -102,6 +102,35 @@
         .color-picker::before{
             content: "\f576";
         }
+
+        .size-picker {
+            -webkit-appearance: none;
+            height: 3px;
+            border-radius: 5px;
+            background: #a7a7a8;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+            width: 200px;
+            margin-bottom: 10px;
+        }
+            
+        .size-picker::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 10px;
+            height: 15px;
+            background: #332ca5;
+            cursor: pointer;
+        }
+          
+        .size-picker::-moz-range-thumb {
+            width: 10px;
+            height: 15px;
+            background: #332ca5;
+            cursor: pointer;
+        }
+        
         .toolList{
             position: relative;
             .size-span{
@@ -124,7 +153,9 @@
                 margin: 0;
                 display: none;
                 list-style: none;
-                background: #ffffff;
+                background: #f7f4f4;
+                border: 1px solid #ccc;
+
             }
             &:hover{
                 ul{

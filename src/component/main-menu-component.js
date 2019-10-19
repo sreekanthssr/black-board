@@ -69,11 +69,10 @@ export default class MainMenuComponent extends React.Component
                     <div className="toolList">
                         <span className="size-span">{this.props.size}</span>
                         <ul>
-                            <li><input type="range" min="5" max="50" onChange={(e) => this.setCurrentSize(e)}/></li>
+                            <li><input type="range" value={this.props.size} className="size-picker" min="1" max="50" onChange={(e) => this.setCurrentSize(e)}/></li>
                         </ul>
                     </div>
                     <div>
-                        {/* <i className="fa fa-fill-drip"></i> */}
                         <input className="color-picker"  style={{color:this.props.color}} type="color" value={this.props.color}  onChange={(e) => this.setCurrentColor(e)}/>
                     </div>
                     <div className="toolList">

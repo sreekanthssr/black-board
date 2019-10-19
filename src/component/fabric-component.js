@@ -1,35 +1,39 @@
 import React from "react";
 import {fabric} from 'fabric';
+import FabricBrush from '../lib/fabric-brush';
 
 export default class FabricComponent extends React.Component{
+    constructor(props){
+        super(props);
+        this.fabricBrush = null;
+    }
     
     componentDidMount(){
         this.props.setCanvas(new fabric.Canvas('fabricCanvas', {
             isDrawingMode: true,
             backgroundColor: "transparent"
         }),(canvas) =>{
-           canvas.setDimensions({width: '97vw', height: '101vh'}, {cssOnly: true})
+           canvas.setDimensions({width: '97vw', height: '101vh'}, {cssOnly: true});
+           this.fabricBrush = new FabricBrush({
+                canvas : canvas,
+                color : this.props.color,
+                size: this.props.size,
+                brushType: this.props.brushType
+            });
+            this.fabricBrush.getBrush();
         });
-        ;
+        
     }
 
     componentDidUpdate(){
-        let canvas = this.props.canvas;
         let color = this.props.color;
         let size = this.props.size;
-
-        canvas.freeDrawingBrush = new fabric['PencilBrush'](canvas);
-        canvas.freeDrawingBrush.color = color;
-        canvas.freeDrawingBrush.width = parseInt(size, 10) || 1;
-        canvas.freeDrawingBrush.shadow = new fabric.Shadow({
-        blur: parseInt(0, 10) || 0,
-        offsetX: 0,
-        offsetY: 0,
-        affectStroke: true,
-        color: color,
-        });
-    
-    console.log(color,size,canvas);
+        let brushType = this.props.brushType;
+        if(this.fabricBrush){
+            this.fabricBrush.setColorSizeBrush(color, size, brushType);
+            this.fabricBrush.getBrush();
+        }
+        
     }
 
     render(){
