@@ -8,7 +8,7 @@ import './App.scss';
 class App extends React.Component{
   constructor(props) {
     super(props);
-    this.state = {canvas : null, currentColor : '#000000', currentSize : 5,  currentBrushType : 'pen' };
+    this.state = {canvas : null, currentColor : '#000', currentSize : 5,  currentBrushType : 'pen' };
     this.setCanvas = this.setCanvas.bind(this);
     this.setCurrentBrushType = this.setCurrentBrushType.bind(this);
     this.setCurrentSize = this.setCurrentSize.bind(this);

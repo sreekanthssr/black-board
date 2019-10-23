@@ -39,10 +39,9 @@ export default class MainMenuComponent extends React.Component
                 break;
             case 'brush':
                 brushClass = 'fa-paint-brush';
-                
+                break;               
             case 'highlighter':
-                    brushClass = 'fa-highlighter';
-                    break;
+                brushClass = 'fa-highlighter';                   
                 break;
             default:
                 brushClass = 'fa-pen';
@@ -63,13 +62,13 @@ export default class MainMenuComponent extends React.Component
                     <div><i className="fa fa-file" onClick={(e) => this.menuClick(e,'new')}></i></div>
                     <div><i className="fa fa-sliders-h" onClick={(e) => this.menuClick(e,'setting')}></i></div>
                     <div className="pageName"><span>Name</span></div>
-                    <div><i className="fa fa-circle fa-circle-small balck" onClick={(e) => this.setColorAndSize(e,'5','#000')}></i></div>
-                    <div><i className="fa fa-circle fa-circle-small red" onClick={(e) => this.setColorAndSize(e,'5','#F00')}></i></div>
-                    <div><i className="fa fa-circle fa-circle-small green" onClick={(e) => this.setColorAndSize(e,'5','#0F0')}></i></div>
-                    <div><i className="fa fa-circle fa-circle-small blue" onClick={(e) => this.setColorAndSize(e,'5','#00F')}></i></div>
-                    <div><i className="fa fa-circle fa-circle-big cyan" onClick={(e) => this.setColorAndSize(e,'30','#009999')}></i></div>
-                    <div><i className="fa fa-circle fa-circle-big orang" onClick={(e) => this.setColorAndSize(e,'30','#ff6600')}></i></div>
-                    <div><i className="fa fa-circle fa-circle-big yellow" onClick={(e) => this.setColorAndSize(e,'30','#FFFF00')}></i></div>
+                    <div><i className={`fa fa-circle fa-circle-small black ${(this.props.color === '#000' && this.props.size === '5') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'5','#000')}></i></div>
+                    <div><i className={`fa fa-circle fa-circle-small red ${(this.props.color === '#F00' && this.props.size === '5') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'5','#F00')}></i></div>
+                    <div><i className={`fa fa-circle fa-circle-small green ${(this.props.color === '#0F0' && this.props.size === '5') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'5','#0F0')}></i></div>
+                    <div><i className={`fa fa-circle fa-circle-small blue ${(this.props.color === '#00F' && this.props.size === '5') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'5','#00F')}></i></div>
+                    <div><i className={`fa fa-circle fa-circle-big cyan ${(this.props.color === '#009999' && this.props.size === '30') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'30','#009999')}></i></div>
+                    <div><i className={`fa fa-circle fa-circle-big orang ${(this.props.color === '#ff6600' && this.props.size === '30') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'30','#ff6600')}></i></div>
+                    <div><i className={`fa fa-circle fa-circle-big yellow ${(this.props.color === '#FFFF00' && this.props.size === '30') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'30','#FFFF00')}></i></div>
                     <div className="toolList">
                         <span className="size-span">{this.props.size}</span>
                         <ul>
@@ -82,10 +81,10 @@ export default class MainMenuComponent extends React.Component
                     <div className="toolList">
                         <i className={`fa ${this.state.brushClass}`}></i>
                         <ul>
-                            <li><i className="fa fa-pen" onClick={(e) => this.setBrushType(e,'pen')}></i>Pen</li>
-                            <li><i className="fa fa-pencil-alt" onClick={(e) => this.setBrushType(e,'pencil')}></i>Pencil</li>
-                            <li><i className="fa fa-paint-brush" onClick={(e) => this.setBrushType(e,'brush')}></i>Brush</li>
-                            <li><i className="fa fa-highlighter" onClick={(e) => this.setBrushType(e,'highlighter')}></i>Highlighter</li>
+                            <li><i className="fa fa-pen" onClick={(e) => this.setBrushType(e,'pen')}></i><div>Pen</div></li>
+                            <li><i className="fa fa-pencil-alt" onClick={(e) => this.setBrushType(e,'pencil')}></i><div>Pencil</div></li>
+                            <li><i className="fa fa-paint-brush" onClick={(e) => this.setBrushType(e,'brush')}></i><div>Brush</div></li>
+                            <li><i className="fa fa-highlighter" onClick={(e) => this.setBrushType(e,'highlighter')}></i><div>Highlighter</div></li>
                         </ul>
                     </div>
                     <div><i className="fa fa-eraser" onClick={(e) => this.menuClick(e,'eraser')}></i></div>

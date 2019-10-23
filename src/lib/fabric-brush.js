@@ -1,13 +1,14 @@
 import {fabric} from 'fabric';
+import fabricMouseCursor from './fabric-mouse-cursor';
 
-export default class FabricBrush{
-    constructor(options){   
-        console.log(options);
+export default class FabricBrush extends fabricMouseCursor{
+    constructor(options){ 
+        super(options);  
         this.options = {};
         this.options.canvas = (options.canvas) ? options.canvas : null;
         this._setBrushType(options.brushType);
         this._setColor(options.color);
-        this._setSize(options.size);
+        this._setSize(options.size);        
     }
 
     getBrush(){
@@ -41,6 +42,7 @@ export default class FabricBrush{
         this._setColor(color);
         this._setSize(size);
         this._setBrushType(brushType);
+        this.setColorSize(color, size);
     }
 
     _getBrushProp(){
