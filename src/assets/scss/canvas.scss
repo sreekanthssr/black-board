@@ -1,6 +1,17 @@
 .drawing-canvas-main{
+    &.white{
+        background-color: white;
+    }
     &.ruled{
         background-image: url('../images/ruled.svg'); 
+        background-repeat: repeat-y;
+    }
+    &.grid{
+        background-image: url('../images/grid.svg'); 
+        background-repeat: repeat;
+    }
+    &.landscape{
+        background-image: url('../images/landscape.svg'); 
         background-repeat: repeat-y;
     }
 }

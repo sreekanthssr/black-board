@@ -10,6 +10,7 @@ export default class MainMenuComponent extends React.Component
         this.setBrushType = this.setBrushType.bind(this);        
         this.setCurrentColor = this.setCurrentColor.bind(this);        
         this.setCurrentSize = this.setCurrentSize.bind(this);
+        this.setCanvasBackground = this.setCanvasBackground.bind(this);
     }
 
     menuClick(e,type){
@@ -50,11 +51,24 @@ export default class MainMenuComponent extends React.Component
         this.props.setCurrentBrushType(brush);
     }
 
+    setCanvasBackground(e,canvasBackground){
+        this.props.setCurrentCanvasBackground(canvasBackground);
+    }
+
     render(){
         return(
             <div className="main-menu-container">
                 <div className="main-menu">
-                    <div><i className="fa fa-bars" onClick={(e) => this.menuClick(e,'menu')}></i></div>
+                    <div className="toolList">
+                        <i className="fa fa-bars"></i>
+                        <ul>
+                            <li><i className={`paper-white-icon ${(this.props.canvasBackground === 'white')? 'paper-active' : ''}`} onClick={(e) => this.setCanvasBackground(e,'white')}></i><div>White paper</div></li>
+                            <li><i className={`paper-ruled-icon ${(this.props.canvasBackground === 'ruled') ? 'paper-active' : ''}`} onClick={(e) => this.setCanvasBackground(e,'ruled')}></i><div>Ruled paper</div></li>
+                            <li><i className={`paper-landscape-icon ${(this.props.canvasBackground === 'landscape') ? 'paper-active' : ''}`} onClick={(e) => this.setCanvasBackground(e,'landscape')}></i><div>Landscape paper</div></li>
+                            <li><i className={`paper-gird-icon ${(this.props.canvasBackground === 'gird') ? 'paper-active' : ''}`} onClick={(e) => this.setCanvasBackground(e,'grid')}></i><div>Grid paper</div></li>
+                            <li><i className={`fa fa-image ${(this.props.canvasBackground === 'image') ? 'paper-active' : ''}`} onClick={(e) => this.setCanvasBackground(e,'image')}></i><div>Custom Image</div></li>
+                        </ul>
+                    </div>
                     <div><i className="fa fa-save" onClick={(e) => this.menuClick(e,'save')}></i></div>
                     <div><i className="fa fa-undo" onClick={(e) => this.menuClick(e,'undo')}></i></div>
                     <div><i className="fa fa-redo" onClick={(e) => this.menuClick(e,'redo')}></i></div>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="30" width="30"><!---->
+   <line x1="0" y1="3" x2="30" y2="3" style="stroke:rgb(120,120,120);stroke-width:1.5" />
+   <line x1="0" y1="9" x2="30" y2="9" style="stroke:rgb(120,120,120);stroke-width:1.5" />
+   <line x1="0" y1="15" x2="30" y2="15" style="stroke:rgb(120,120,120);stroke-width:1.5" />
+   <line x1="0" y1="21" x2="30" y2="21" style="stroke:rgb(120,120,120);stroke-width:1.5" />
+   <line x1="0" y1="27" x2="30" y2="27" style="stroke:rgb(120,120,120);stroke-width:1.5" />
+   <line x1="6" y1="0" x2="6" y2="30" style="stroke:rgb(120,120,120);stroke-width:1.5" />
+</svg> 

@@ -39,7 +39,7 @@ export default class FabricComponent extends React.Component{
 
     render(){
         return(
-            <div className="drawing-canvas-main ruled">
+            <div className={`drawing-canvas-main ${this.props.canvasBackground}`}>
                 <canvas id="fabricCanvas" width={'600'} height={'600'}></canvas>
             </div>
         );
