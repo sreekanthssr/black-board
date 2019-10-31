@@ -38,8 +38,13 @@ export default class FabricComponent extends React.Component{
     }
 
     render(){
+        let currrentBGImageStyle = {};
+        if(this.props.currentBGImage){
+            currrentBGImageStyle.background = `url('${this.props.currentBGImage}') no-repeat center center`;
+            currrentBGImageStyle.backgroundSize = 'contain';
+        }
         return(
-            <div className={`drawing-canvas-main ${this.props.canvasBackground}`}>
+            <div className={`drawing-canvas-main ${this.props.canvasBackground}`} style={currrentBGImageStyle}>
                 <canvas id="fabricCanvas" width={'600'} height={'600'}></canvas>
             </div>
         );
