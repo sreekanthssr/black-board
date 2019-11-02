@@ -25,20 +25,10 @@ export default class fabricMouseCursor {
     }
 
     _setMouseHandler(){
-        /*this.options.canvas.on("mouse:down", () =>{
-            this.mouseDown = true;
-        });
-        this.options.canvas.on("mouse:up", () =>{
-            this.mouseDown = false;
-        });*/
         this.options.canvas.on("mouse:move", (e) =>{
             this._createCursor(e.pointer);
             this._showCursor(e.pointer);
         });
-        /*this.options.canvas.on("mouse:over", (e) =>{
-            this._createCursor(e.pointer);
-        });*/
-        
         this.options.canvas.on("mouse:out", (e) =>{
             this._removeCursor(e.pointer);
         });

@@ -1,11 +1,14 @@
 import React from "react";
 import {fabric} from 'fabric';
 import FabricBrush from '../lib/fabric-brush';
+import FabricUndoRedo from '../lib/fabric-undo-redo';
 
 export default class FabricComponent extends React.Component{
     constructor(props){
         super(props);
         this.fabricBrush = null;
+        this.fabricUndoRedo = null;
+        this.drawingCanvasRef = React.createRef();
     }
     
     componentDidMount(){
@@ -22,8 +25,9 @@ export default class FabricComponent extends React.Component{
                 brushType: this.props.brushType
             });
             this.fabricBrush.getBrush();
+            this.fabricUndoRedo = new FabricUndoRedo({canvas : canvas});
         });
-        
+        this.props.passRef(this.drawingCanvasRef.current);
     }
 
     componentDidUpdate(){
@@ -33,6 +37,9 @@ export default class FabricComponent extends React.Component{
         if(this.fabricBrush){
             this.fabricBrush.setColorSizeBrush(color, size, brushType);
             this.fabricBrush.getBrush();
+        }
+        if(this.fabricUndoRedo){
+            this.fabricUndoRedo.action(this.props.action);
         }
         
     }
@@ -44,7 +51,7 @@ export default class FabricComponent extends React.Component{
             currrentBGImageStyle.backgroundSize = 'contain';
         }
         return(
-            <div className={`drawing-canvas-main ${this.props.canvasBackground}`} style={currrentBGImageStyle}>
+            <div ref={this.drawingCanvasRef} className={`drawing-canvas-main ${this.props.canvasBackground}`} style={currrentBGImageStyle}>
                 <canvas id="fabricCanvas" width={'600'} height={'600'}></canvas>
             </div>
         );

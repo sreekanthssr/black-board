@@ -1,4 +1,5 @@
 import React from 'react';
+import html2canvas from 'html2canvas';
 
 export default class MainMenuComponent extends React.Component
 {
@@ -14,9 +15,7 @@ export default class MainMenuComponent extends React.Component
     }
 
     menuClick(e,type){
-        switch(type){
-
-        }
+        this.props.setCurrentAction(type);
     }    
 
     setColorAndSize(e,size,color){
@@ -55,6 +54,28 @@ export default class MainMenuComponent extends React.Component
         this.props.setCurrentCanvasBackground(canvasBackground);
     }
 
+    save(){
+            html2canvas(this.props.drawingCanvasRef,
+                {
+                    allowTaint : true,
+                    foreignObjectRendering : true,
+                    useCORS: true,
+                    backgroundColor: null
+                })
+                .then((canvas)=>{
+                let link = document.createElement("a");
+                    link.download = "Notebook.png";
+                    link.href = canvas.toDataURL("image/png");
+                    link.click();
+            });/*, {
+                onrendered: function (canvas) {
+                    let myImage = canvas.toDataURL("image/png");
+                    console.log(myImage);
+                    
+                }
+            });*/
+    }
+
     render(){
         return(
             <div className="main-menu-container">
@@ -69,14 +90,14 @@ export default class MainMenuComponent extends React.Component
                             <li><i className={`fa fa-image ${(this.props.canvasBackground === 'image') ? 'paper-active' : ''}`} onClick={(e) => this.setCanvasBackground(e,'image')}></i><div>Custom Image</div></li>
                         </ul>
                     </div>
-                    <div><i className="fa fa-save" onClick={(e) => this.menuClick(e,'save')}></i></div>
+                    <div><i className="fa fa-save" onClick={(e) => this.save(e,'save')}></i></div>
                     <div><i className="fa fa-undo" onClick={(e) => this.menuClick(e,'undo')}></i></div>
                     <div><i className="fa fa-redo" onClick={(e) => this.menuClick(e,'redo')}></i></div>
                     <div><i className="fa fa-paste" onClick={(e) => this.menuClick(e,'paste')}></i></div>
                     <div><i className="fa fa-file" onClick={(e) => this.menuClick(e,'new')}></i></div>
                     <div><i className="fa fa-sliders-h" onClick={(e) => this.menuClick(e,'setting')}></i></div>
                     <div className="pageName"><span>Name</span></div>
-                    <div><i className={`fa fa-circle fa-circle-small black ${(this.props.color === '#000' && this.props.size === '5') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'5','#000')}></i></div>
+                    <div><i className={`fa fa-circle fa-circle-small black ${(this.props.color === '#000000' && this.props.size === '5') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'5','#000000')}></i></div>
                     <div><i className={`fa fa-circle fa-circle-small red ${(this.props.color === '#F00' && this.props.size === '5') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'5','#F00')}></i></div>
                     <div><i className={`fa fa-circle fa-circle-small green ${(this.props.color === '#0F0' && this.props.size === '5') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'5','#0F0')}></i></div>
                     <div><i className={`fa fa-circle fa-circle-small blue ${(this.props.color === '#00F' && this.props.size === '5') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'5','#00F')}></i></div>
@@ -105,7 +126,7 @@ export default class MainMenuComponent extends React.Component
                     <div><i className="fa fa-object-group" onClick={(e) => this.menuClick(e,'select-area')}></i></div>
                     </div>
             </div>
-
+            
         );
     }
 }
