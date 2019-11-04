@@ -1,16 +1,17 @@
 import React from 'react';
 import './App.scss';
 
+
 import FabricComponent from './component/fabric-component';
 import MainMenuComponent from './component/main-menu-component';
 import ImageUploadComponent from './component/image-upload-component';
-
+import CustomModalComponent from './component/custom-modal-component';
 
 
 class App extends React.Component{
   constructor(props) {
     super(props);
-    this.state = {canvas : null, currentColor : '#000000', currentSize : 5,  currentBrushType : 'pen', currentCanvasBackground : 'ruled', currentBGImage:'',showModel : false, drawingCanvasRef : null,currentAction : null };
+    this.state = {canvas : null, currentColor : '#000000', currentSize : 5,  currentBrushType : 'pen', currentCanvasBackground : 'ruled', currentBGImage:'',showImageUploadBox : false, drawingCanvasRef : null,currentAction : null };
     this.setCanvas = this.setCanvas.bind(this);
     this.setCurrentBrushType = this.setCurrentBrushType.bind(this);
     this.setCurrentSize = this.setCurrentSize.bind(this);
@@ -19,6 +20,7 @@ class App extends React.Component{
     this.setCurrentBGImage = this.setCurrentBGImage.bind(this);
     this.passRef = this.passRef.bind(this);
     this.setCurrentAction = this.setCurrentAction.bind(this);
+    this.oldCanvasBackground = {image:'',type:'ruled'};
   }
 
   setCanvas(canvas,done){
@@ -42,16 +44,24 @@ class App extends React.Component{
   }
   
   setCurrentCanvasBackground(currentCanvasBackground){
+    this.oldCanvasBackground.type = this.state.currentCanvasBackground;
     this.setState({currentCanvasBackground});
     if(currentCanvasBackground  === 'image'){
-      this.setState({showModel : true});
+      this.setState({showImageUploadBox : true});
     }
   }
 
   setCurrentBGImage(currentBGImage){
-    this.setState({currentBGImage, showModel:false});
+    this.oldCanvasBackground.image = this.state.currentBGImage;
+    if(currentBGImage){
+      this.setState({currentBGImage, showImageUploadBox:false});
+    } else {
+      this.setState({currentBGImage:this.oldCanvasBackground.image,currentCanvasBackground:this.oldCanvasBackground.type, showImageUploadBox:false});
+    }
     
   }
+
+
 
   passRef(drawingCanvasRef){
     this.setState({drawingCanvasRef});
@@ -84,9 +94,9 @@ class App extends React.Component{
                         passRef = {this.passRef}
                         action = {this.state.currentAction}
       />
-      {this.state.showModel && <ImageUploadComponent 
-                      setCurrentBGImage = {this.setCurrentBGImage}
-                      setCurrentCanvasBackground = {this.setCurrentCanvasBackground}/>}
+      <CustomModalComponent show={this.state.showImageUploadBox} closeCallBack = {this.setCurrentBGImage}>
+        <ImageUploadComponent  setCurrentBGImage = {this.setCurrentBGImage}/>
+      </CustomModalComponent>
     </div>);
   }
 }

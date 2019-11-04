@@ -93,7 +93,7 @@ export default class MainMenuComponent extends React.Component
                     <div><i className="fa fa-save" onClick={(e) => this.save(e,'save')}></i></div>
                     <div><i className="fa fa-undo" onClick={(e) => this.menuClick(e,'undo')}></i></div>
                     <div><i className="fa fa-redo" onClick={(e) => this.menuClick(e,'redo')}></i></div>
-                    <div><i className="fa fa-paste" onClick={(e) => this.menuClick(e,'paste')}></i></div>
+                    {/* <div><i className="fa fa-paste" onClick={(e) => this.menuClick(e,'paste')}></i></div> */}
                     <div><i className="fa fa-file" onClick={(e) => this.menuClick(e,'new')}></i></div>
                     <div><i className="fa fa-sliders-h" onClick={(e) => this.menuClick(e,'setting')}></i></div>
                     <div className="pageName"><span>Name</span></div>

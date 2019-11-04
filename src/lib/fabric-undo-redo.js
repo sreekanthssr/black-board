@@ -1,5 +1,3 @@
-import {fabric} from 'fabric';
-
 export default class fabricUndoRedo {
     constructor(options){  
         this.cursor = null; 
