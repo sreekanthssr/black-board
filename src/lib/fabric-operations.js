@@ -1,4 +1,4 @@
-export default class fabricUndoRedo {
+export default class FabricOperations {
     constructor(options){  
         this.cursor = null; 
         this.options = {};
@@ -7,10 +7,16 @@ export default class fabricUndoRedo {
     }
 
     action(type){
-        if(type === 'undo'){
-            this._undo();
-        } else if(type === 'redo'){
-            this._redo();
+        switch(type){
+            case 'undo':
+                this._undo();
+                break;
+            case 'redo':
+                this._redo();
+                break;
+            case 'new':
+                this._claerAll();
+            default:
         }
 
     }
@@ -34,5 +40,13 @@ export default class fabricUndoRedo {
 
     _setRedoArray(object){
         this.redoArray.push(object);
+    }
+
+    _claerAll(){
+        if(this.options.canvas){
+            this.redoArray.length = 0;
+            this.options.canvas.clear();
+        }
+        
     }
 }

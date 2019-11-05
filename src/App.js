@@ -6,12 +6,13 @@ import FabricComponent from './component/fabric-component';
 import MainMenuComponent from './component/main-menu-component';
 import ImageUploadComponent from './component/image-upload-component';
 import CustomModalComponent from './component/custom-modal-component';
+import ConfirmBoxComponent from './component/confirm-box-component';
 
 
 class App extends React.Component{
   constructor(props) {
     super(props);
-    this.state = {canvas : null, currentColor : '#000000', currentSize : 5,  currentBrushType : 'pen', currentCanvasBackground : 'ruled', currentBGImage:'',showImageUploadBox : false, drawingCanvasRef : null,currentAction : null };
+    this.state = {canvas : null, currentColor : '#000000', currentSize : 5,  currentBrushType : 'pen', currentCanvasBackground : 'ruled', currentBGImage:'',showImageUploadBox : false, drawingCanvasRef : null,currentAction : null, saveConfirmFlag : false };
     this.setCanvas = this.setCanvas.bind(this);
     this.setCurrentBrushType = this.setCurrentBrushType.bind(this);
     this.setCurrentSize = this.setCurrentSize.bind(this);
@@ -60,15 +61,28 @@ class App extends React.Component{
     }
     
   }
-
-
-
+ 
   passRef(drawingCanvasRef){
     this.setState({drawingCanvasRef});
   }
 
-  setCurrentAction(currentAction){
-    this.setState({currentAction});
+  checkCanvasUpdated(){
+    return (this.state.canvas && this.state.canvas.getObjects().length >1);
+  }
+
+  setCurrentAction(currentAction,overWriteCheck){
+    this.setState({saveConfirmFlag : false});
+    switch(currentAction){
+      case 'new':
+        (this.checkCanvasUpdated() && !overWriteCheck) ? this.setState({saveConfirmFlag : true}) : this.setState({currentAction});
+        break;
+      default: 
+        this.setState({currentAction});
+    }
+  }
+
+  setSaveConfirmFlag(saveConfirmFlag){
+    this.setState({saveConfirmFlag});
   }
 
   render(){
@@ -84,6 +98,7 @@ class App extends React.Component{
                           drawingCanvasRef = {this.state.drawingCanvasRef}
 
       />
+
       <FabricComponent  setCanvas={this.setCanvas} 
                         canvas={this.state.canvas} 
                         color={this.state.currentColor} 
@@ -94,8 +109,13 @@ class App extends React.Component{
                         passRef = {this.passRef}
                         action = {this.state.currentAction}
       />
+
       <CustomModalComponent show={this.state.showImageUploadBox} closeCallBack = {this.setCurrentBGImage}>
         <ImageUploadComponent  setCurrentBGImage = {this.setCurrentBGImage}/>
+      </CustomModalComponent>
+
+      <CustomModalComponent show={this.state.saveConfirmFlag} closeCallBack = {() => this.setSaveConfirmFlag(false)}>
+        <ConfirmBoxComponent messgae="Do you want to save the changes?" button1="Yes" button2="No" button1CallBack={() => this.setCurrentAction('save')} button2Callback={() => this.setCurrentAction('new', true)} />
       </CustomModalComponent>
     </div>);
   }

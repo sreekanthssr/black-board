@@ -54,7 +54,7 @@ export default class MainMenuComponent extends React.Component
         this.props.setCurrentCanvasBackground(canvasBackground);
     }
 
-    save(){
+    download(){
             html2canvas(this.props.drawingCanvasRef,
                 {
                     allowTaint : true,
@@ -90,12 +90,13 @@ export default class MainMenuComponent extends React.Component
                             <li><i className={`fa fa-image ${(this.props.canvasBackground === 'image') ? 'paper-active' : ''}`} onClick={(e) => this.setCanvasBackground(e,'image')}></i><div>Custom Image</div></li>
                         </ul>
                     </div>
-                    <div><i className="fa fa-save" onClick={(e) => this.save(e,'save')}></i></div>
+                    <div><i className="fa fa-file" onClick={(e) => this.menuClick(e,'new')}></i></div>
+                    <div><i className="fa fa-save" onClick={(e) => this.menuClick(e,'save')}></i></div>
+                    <div><i className="fa fa-download" onClick={(e) => this.download(e,'download')}></i></div>
                     <div><i className="fa fa-undo" onClick={(e) => this.menuClick(e,'undo')}></i></div>
                     <div><i className="fa fa-redo" onClick={(e) => this.menuClick(e,'redo')}></i></div>
-                    {/* <div><i className="fa fa-paste" onClick={(e) => this.menuClick(e,'paste')}></i></div> */}
-                    <div><i className="fa fa-file" onClick={(e) => this.menuClick(e,'new')}></i></div>
-                    <div><i className="fa fa-sliders-h" onClick={(e) => this.menuClick(e,'setting')}></i></div>
+                    {/* <div><i className="fa fa-paste" onClick={(e) => this.menuClick(e,'paste')}></i></div> 
+                     <div><i className="fa fa-sliders-h" onClick={(e) => this.menuClick(e,'setting')}></i></div> */}
                     <div className="pageName"><span>Name</span></div>
                     <div><i className={`fa fa-circle fa-circle-small black ${(this.props.color === '#000000' && this.props.size === '5') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'5','#000000')}></i></div>
                     <div><i className={`fa fa-circle fa-circle-small red ${(this.props.color === '#F00' && this.props.size === '5') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'5','#F00')}></i></div>

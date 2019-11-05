@@ -1,13 +1,13 @@
 import React from "react";
 import {fabric} from 'fabric';
 import FabricBrush from '../lib/fabric-brush';
-import FabricUndoRedo from '../lib/fabric-undo-redo';
+import FabricOperations from '../lib/fabric-operations';
 
 export default class FabricComponent extends React.Component{
     constructor(props){
         super(props);
         this.fabricBrush = null;
-        this.fabricUndoRedo = null;
+        this.fabricOperationsObj = null;
         this.drawingCanvasRef = React.createRef();
     }
     
@@ -25,7 +25,7 @@ export default class FabricComponent extends React.Component{
                 brushType: this.props.brushType
             });
             this.fabricBrush.getBrush();
-            this.fabricUndoRedo = new FabricUndoRedo({canvas : canvas});
+            this.fabricOperationsObj = new FabricOperations({canvas : canvas});
         });
         this.props.passRef(this.drawingCanvasRef.current);
     }
@@ -38,8 +38,8 @@ export default class FabricComponent extends React.Component{
             this.fabricBrush.setColorSizeBrush(color, size, brushType);
             this.fabricBrush.getBrush();
         }
-        if(this.fabricUndoRedo){
-            this.fabricUndoRedo.action(this.props.action);
+        if(this.fabricOperationsObj){
+            this.fabricOperationsObj.action(this.props.action);
         }
         
     }
