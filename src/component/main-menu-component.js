@@ -92,7 +92,7 @@ export default class MainMenuComponent extends React.Component
                     <div><i className="fa fa-redo" onClick={(e) => this.menuClick(e,'redo')}></i></div>
                     {/* <div><i className="fa fa-paste" onClick={(e) => this.menuClick(e,'paste')}></i></div> 
                      <div><i className="fa fa-sliders-h" onClick={(e) => this.menuClick(e,'setting')}></i></div> */}
-                    <div className="pageName"><span>Name</span></div>
+                    <div className="pageName"><span>Notebook</span></div>
                     <div><i className={`fa fa-circle fa-circle-small black ${(this.props.color === '#000000' && this.props.size === '5') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'5','#000000')}></i></div>
                     <div><i className={`fa fa-circle fa-circle-small red ${(this.props.color === '#F00' && this.props.size === '5') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'5','#F00')}></i></div>
                     <div><i className={`fa fa-circle fa-circle-small green ${(this.props.color === '#0F0' && this.props.size === '5') ? 'active' : ''}`} onClick={(e) => this.setColorAndSize(e,'5','#0F0')}></i></div>
