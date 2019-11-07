@@ -39,7 +39,7 @@ export default class FabricComponent extends React.Component{
             this.fabricBrush.getBrush();
         }
         if(this.fabricOperationsObj){
-            this.fabricOperationsObj.action(this.props.action);
+            this.fabricOperationsObj.action(this.props.action, this.props.importJson);
         }
         
     }

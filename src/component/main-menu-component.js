@@ -67,13 +67,7 @@ export default class MainMenuComponent extends React.Component
                     link.download = "Notebook.png";
                     link.href = canvas.toDataURL("image/png");
                     link.click();
-            });/*, {
-                onrendered: function (canvas) {
-                    let myImage = canvas.toDataURL("image/png");
-                    console.log(myImage);
-                    
-                }
-            });*/
+            });
     }
 
     render(){
@@ -92,6 +86,7 @@ export default class MainMenuComponent extends React.Component
                     </div>
                     <div><i className="fa fa-file" onClick={(e) => this.menuClick(e,'new')}></i></div>
                     <div><i className="fa fa-save" onClick={(e) => this.menuClick(e,'save')}></i></div>
+                    <div><i className="fa fa-file-import" onClick={(e) => this.menuClick(e,'open')}></i></div> 
                     <div><i className="fa fa-download" onClick={(e) => this.download(e,'download')}></i></div>
                     <div><i className="fa fa-undo" onClick={(e) => this.menuClick(e,'undo')}></i></div>
                     <div><i className="fa fa-redo" onClick={(e) => this.menuClick(e,'redo')}></i></div>

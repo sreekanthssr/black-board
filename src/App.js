@@ -5,6 +5,7 @@ import './App.scss';
 import FabricComponent from './component/fabric-component';
 import MainMenuComponent from './component/main-menu-component';
 import ImageUploadComponent from './component/image-upload-component';
+import ImportJsonComponent from './component/import-json-component';
 import CustomModalComponent from './component/custom-modal-component';
 import ConfirmBoxComponent from './component/confirm-box-component';
 
@@ -12,7 +13,7 @@ import ConfirmBoxComponent from './component/confirm-box-component';
 class App extends React.Component{
   constructor(props) {
     super(props);
-    this.state = {canvas : null, currentColor : '#000000', currentSize : 5,  currentBrushType : 'pen', currentCanvasBackground : 'ruled', currentBGImage:'',showImageUploadBox : false, drawingCanvasRef : null,currentAction : null, saveConfirmFlag : false };
+    this.state = {canvas : null, currentColor : '#000000', currentSize : 5,  currentBrushType : 'pen', currentCanvasBackground : 'ruled', currentBGImage:'',showImageUploadBox : false, drawingCanvasRef : null,currentAction : null, saveConfirmFlag : false, importJsonFlag : false, importJson : null };
     this.setCanvas = this.setCanvas.bind(this);
     this.setCurrentBrushType = this.setCurrentBrushType.bind(this);
     this.setCurrentSize = this.setCurrentSize.bind(this);
@@ -21,6 +22,7 @@ class App extends React.Component{
     this.setCurrentBGImage = this.setCurrentBGImage.bind(this);
     this.passRef = this.passRef.bind(this);
     this.setCurrentAction = this.setCurrentAction.bind(this);
+    this.setImportJson = this.setImportJson.bind(this);
     this.oldCanvasBackground = {image:'',type:'ruled'};
   }
 
@@ -52,10 +54,10 @@ class App extends React.Component{
     }
   }
 
-  setCurrentBGImage(currentBGImage){
+  setCurrentBGImage(e){
     this.oldCanvasBackground.image = this.state.currentBGImage;
-    if(currentBGImage){
-      this.setState({currentBGImage, showImageUploadBox:false});
+    if(e && e.target && e.target.files){
+      this.setState({currentBGImage : URL.createObjectURL(e.target.files[0]), showImageUploadBox:false});
     } else {
       this.setState({currentBGImage:this.oldCanvasBackground.image,currentCanvasBackground:this.oldCanvasBackground.type, showImageUploadBox:false});
     }
@@ -76,6 +78,9 @@ class App extends React.Component{
       case 'new':
         (this.checkCanvasUpdated() && !overWriteCheck) ? this.setState({saveConfirmFlag : true}) : this.setState({currentAction});
         break;
+      case 'open':
+        this.setState({importJsonFlag : true});
+        break;
       default: 
         this.setState({currentAction});
     }
@@ -83,6 +88,11 @@ class App extends React.Component{
 
   setSaveConfirmFlag(saveConfirmFlag){
     this.setState({saveConfirmFlag});
+  }
+
+  setImportJson(e){
+    if(e && e.target && e.target.files)
+      this.setState({importJson : e.target.files[0], importJsonFlag:false, currentAction: 'open'});
   }
 
   render(){
@@ -108,10 +118,15 @@ class App extends React.Component{
                         currentBGImage = {this.state.currentBGImage}
                         passRef = {this.passRef}
                         action = {this.state.currentAction}
+                        importJson = {this.state.importJson}
       />
 
       <CustomModalComponent show={this.state.showImageUploadBox} closeCallBack = {this.setCurrentBGImage}>
         <ImageUploadComponent  setCurrentBGImage = {this.setCurrentBGImage}/>
+      </CustomModalComponent>
+
+      <CustomModalComponent show={this.state.importJsonFlag} closeCallBack = {this.setImportJson}>
+        <ImportJsonComponent  setImportJson = {this.setImportJson}/>
       </CustomModalComponent>
 
       <CustomModalComponent show={this.state.saveConfirmFlag} closeCallBack = {() => this.setSaveConfirmFlag(false)}>

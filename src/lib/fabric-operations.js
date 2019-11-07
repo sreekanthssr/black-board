@@ -6,7 +6,7 @@ export default class FabricOperations {
         this.redoArray = [];
     }
 
-    action(type){
+    action(type, param){
         switch(type){
             case 'undo':
                 this._undo();
@@ -16,6 +16,13 @@ export default class FabricOperations {
                 break;
             case 'new':
                 this._claerAll();
+                break;
+            case 'save':
+                this._save();
+                break;
+            case 'open':
+                this._open(param);
+                break;
             default:
         }
 
@@ -48,5 +55,45 @@ export default class FabricOperations {
             this.options.canvas.clear();
         }
         
+    }
+
+    _getFormatedDate(){
+        let date = new Date();
+        return `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
+    }
+
+    _save(){
+        if(this.options.canvas && this.options.canvas.getObjects().length){
+            let canvasJson = this.options.canvas.toDatalessJSON();
+            let link = document.createElement("a");
+            link.download = `Notebook-${this._getFormatedDate()}.json`;
+            link.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(canvasJson));
+            link.click();
+        }
+    }
+
+    _open(file){
+        if(this.options.canvas && file){
+            this._claerAll();
+            try{
+                
+                    let reader = new FileReader();
+                    reader.onload = (event)=>{
+                        console.log(event.target.result);
+                        let json = JSON.parse(event.target.result);
+                        if(json.objects){
+                            this.options.canvas.loadFromJSON(json, (obj) =>{
+                                this.options.canvas.renderAll();
+                            });
+                        }
+                    };
+                    reader.readAsText(file);
+
+                
+            }catch(e){
+                console.log(e);
+            }
+            
+        }
     }
 }
