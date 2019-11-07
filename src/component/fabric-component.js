@@ -1,59 +1,58 @@
-import React from "react";
-import {fabric} from 'fabric';
-import FabricBrush from '../lib/fabric-brush';
-import FabricOperations from '../lib/fabric-operations';
+import React from 'react'
+import { fabric } from 'fabric'
+import FabricBrush from '../lib/fabric-brush'
+import FabricOperations from '../lib/fabric-operations'
 
-export default class FabricComponent extends React.Component{
-    constructor(props){
-        super(props);
-        this.fabricBrush = null;
-        this.fabricOperationsObj = null;
-        this.drawingCanvasRef = React.createRef();
+export default class FabricComponent extends React.Component {
+    constructor (props) {
+        super(props)
+        this.fabricBrush = null
+        this.fabricOperationsObj = null
+        this.drawingCanvasRef = React.createRef()
     }
-    
-    componentDidMount(){
+
+    componentDidMount () {
         this.props.setCanvas(new fabric.Canvas('fabricCanvas', {
             isDrawingMode: true,
-            backgroundColor: "transparent",
-            freeDrawingCursor : 'none'
-        }),(canvas) =>{
-           canvas.setDimensions({width: '97vw', height: '101vh'}, {cssOnly: true});
-           this.fabricBrush = new FabricBrush({
-                canvas : canvas,
-                color : this.props.color,
+            backgroundColor: 'transparent',
+            freeDrawingCursor: 'none'
+        }), (canvas) => {
+            canvas.setDimensions({ width: '97vw', height: '101vh' }, { cssOnly: true })
+            this.fabricBrush = new FabricBrush({
+                canvas: canvas,
+                color: this.props.color,
                 size: this.props.size,
                 brushType: this.props.brushType
-            });
-            this.fabricBrush.getBrush();
-            this.fabricOperationsObj = new FabricOperations({canvas : canvas});
-        });
-        this.props.passRef(this.drawingCanvasRef.current);
+            })
+            this.fabricBrush.getBrush()
+            this.fabricOperationsObj = new FabricOperations({ canvas: canvas })
+        })
+        this.props.passRef(this.drawingCanvasRef.current)
     }
 
-    componentDidUpdate(){
-        let color = this.props.color;
-        let size = this.props.size;
-        let brushType = this.props.brushType;
-        if(this.fabricBrush){
-            this.fabricBrush.setColorSizeBrush(color, size, brushType);
-            this.fabricBrush.getBrush();
+    componentDidUpdate () {
+        const color = this.props.color
+        const size = this.props.size
+        const brushType = this.props.brushType
+        if (this.fabricBrush) {
+            this.fabricBrush.setColorSizeBrush(color, size, brushType)
+            this.fabricBrush.getBrush()
         }
-        if(this.fabricOperationsObj){
-            this.fabricOperationsObj.action(this.props.action, this.props.importJson);
+        if (this.fabricOperationsObj) {
+            this.fabricOperationsObj.action(this.props.action, this.props.importJson)
         }
-        
     }
 
-    render(){
-        let currrentBGImageStyle = {};
-        if(this.props.currentBGImage){
-            currrentBGImageStyle.background = `url('${this.props.currentBGImage}') no-repeat center center`;
-            currrentBGImageStyle.backgroundSize = 'contain';
+    render () {
+        const currrentBGImageStyle = {}
+        if (this.props.currentBGImage) {
+            currrentBGImageStyle.background = `url('${this.props.currentBGImage}') no-repeat center center`
+            currrentBGImageStyle.backgroundSize = 'contain'
         }
-        return(
+        return (
             <div ref={this.drawingCanvasRef} className={`drawing-canvas-main ${this.props.canvasBackground}`} style={currrentBGImageStyle}>
                 <canvas id="fabricCanvas" width={'600'} height={'600'}></canvas>
             </div>
-        );
+        )
     }
 }
