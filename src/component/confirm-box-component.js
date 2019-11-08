@@ -1,15 +1,6 @@
-import React from 'react'
+import React from 'react';
 
 export default class ConfirmBoxComponent extends React.Component {
-    constructor (props) {
-        super(props)
-        this.dummy = this.dummy.bind(this)
-    }
-
-    dummy () {
-
-    }
-
     render () {
         return (<div className="">
             <div>{(this.props.messgae) ? this.props.messgae : 'Message here'}</div>
@@ -23,6 +14,6 @@ export default class ConfirmBoxComponent extends React.Component {
                     </button>
                 }
             </div>
-        </div>)
+        </div>);
     }
 }

@@ -1,139 +1,121 @@
-import React from 'react'
-import './App.scss'
+import React from 'react';
+import './App.scss';
 
-import FabricComponent from './component/fabric-component'
-import MainMenuComponent from './component/main-menu-component'
-import ImageUploadComponent from './component/image-upload-component'
-import ImportJsonComponent from './component/import-json-component'
-import CustomModalComponent from './component/custom-modal-component'
-import ConfirmBoxComponent from './component/confirm-box-component'
+import FabricComponent from './component/fabric-component';
+import MainMenuComponent from './component/main-menu-component';
+import ImageUploadComponent from './component/image-upload-component';
+import ImportJsonComponent from './component/import-json-component';
+import CustomModalComponent from './component/custom-modal-component';
+import ConfirmBoxComponent from './component/confirm-box-component';
 
 class App extends React.Component {
     constructor (props) {
-        super(props)
-        this.state = { canvas: null, currentColor: '#000000', currentSize: 5, currentBrushType: 'pen', currentCanvasBackground: 'ruled', currentBGImage: '', showImageUploadBox: false, drawingCanvasRef: null, currentAction: null, saveConfirmFlag: false, importJsonFlag: false, importJson: null }
-        this.setCanvas = this.setCanvas.bind(this)
-        this.setCurrentBrushType = this.setCurrentBrushType.bind(this)
-        this.setCurrentSize = this.setCurrentSize.bind(this)
-        this.setCurrentColor = this.setCurrentColor.bind(this)
-        this.setCurrentCanvasBackground = this.setCurrentCanvasBackground.bind(this)
-        this.setCurrentBGImage = this.setCurrentBGImage.bind(this)
-        this.passRef = this.passRef.bind(this)
-        this.setCurrentAction = this.setCurrentAction.bind(this)
-        this.setImportJson = this.setImportJson.bind(this)
-        this.oldCanvasBackground = { image: '', type: 'ruled' }
+        super(props);
+        this.state = { canvas: null, color: '#000000', size: 5, brushType: 'pen', canvasBackground: 'ruled', BGImage: '', showImageUploadBox: false, drawingCanvasRef: null, action: null, saveConfirmFlag: false, importJsonFlag: false, importJson: null };
+
+        this.setCurrentState = this.setCurrentState.bind(this);
+        this.setCanvas = this.setCanvas.bind(this);
+        this.oldCanvasBackground = { image: '', type: 'ruled' };
     }
 
     setCanvas (canvas, done) {
         this.setState({
             canvas
         }, () => {
-            done(this.state.canvas)
-        })
+            done(this.state.canvas);
+        });
     }
 
-    setCurrentBrushType (currentBrushType) {
-        this.setState({ currentBrushType })
-    }
-
-    setCurrentColor (currentColor) {
-        this.setState({ currentColor })
-    }
-
-    setCurrentSize (currentSize) {
-        this.setState({ currentSize })
-    }
-
-    setCurrentCanvasBackground (currentCanvasBackground) {
-        this.oldCanvasBackground.type = this.state.currentCanvasBackground
-        this.setState({ currentCanvasBackground })
-        if (currentCanvasBackground === 'image') {
-            this.setState({ showImageUploadBox: true })
+    setCurrentState (param) {
+        if (param) {
+            if (param.action) {
+                this.setState({ saveConfirmFlag: false, action: null });
+                switch (param.action) {
+                case 'new-confirm':
+                    this.setState({ saveConfirmFlag: true });
+                    break;
+                case 'new':
+                    this.setState({ action: 'new', saveConfirmFlag: false });
+                    break;
+                case 'open':
+                    this.setState({ importJsonFlag: true });
+                    break;
+                case 'cancel-save':
+                    this.setState({ action: null, saveConfirmFlag: false });
+                    break;
+                default:
+                    this.setState(param);
+                }
+            } else if (param.importJson) {
+                if (param.importJson && param.importJson.target && param.importJson.target.files) {
+                    this.setState({ importJson: param.importJson.target.files[0], importJsonFlag: false, action: 'open' });
+                } else {
+                    this.setState({ importJsonFlag: false });
+                }
+            } else if (param.canvasBackground) {
+                this.oldCanvasBackground.type = this.state.canvasBackground;
+                this.setState(param);
+                if (param.canvasBackground === 'image') {
+                    this.setState({ showImageUploadBox: true });
+                } else {
+                    this.setState({ BGImage: null });
+                }
+            } else if (param.BGImage) {
+                this.oldCanvasBackground.image = this.state.BGImage;
+                if (param.BGImage && param.BGImage.target && param.BGImage.target.files) {
+                    this.setState({ BGImage: URL.createObjectURL(param.BGImage.target.files[0]), showImageUploadBox: false });
+                } else {
+                    this.setState({ BGImage: this.oldCanvasBackground.image, canvasBackground: this.oldCanvasBackground.type, showImageUploadBox: false });
+                }
+            } else {
+                console.log(param);
+                this.setState(param);
+            }
         }
-    }
-
-    setCurrentBGImage (e) {
-        this.oldCanvasBackground.image = this.state.currentBGImage
-        if (e && e.target && e.target.files) {
-            this.setState({ currentBGImage: URL.createObjectURL(e.target.files[0]), showImageUploadBox: false })
-        } else {
-            this.setState({ currentBGImage: this.oldCanvasBackground.image, currentCanvasBackground: this.oldCanvasBackground.type, showImageUploadBox: false })
-        }
-    }
-
-    passRef (drawingCanvasRef) {
-        this.setState({ drawingCanvasRef })
     }
 
     checkCanvasUpdated () {
-        return (this.state.canvas && this.state.canvas.getObjects().length > 1)
-    }
-
-    setCurrentAction (currentAction, overWriteCheck) {
-        this.setState({ saveConfirmFlag: false })
-        switch (currentAction) {
-        case 'new':
-            (this.checkCanvasUpdated() && !overWriteCheck) ? this.setState({ saveConfirmFlag: true }) : this.setState({ currentAction })
-            break
-        case 'open':
-            this.setState({ importJsonFlag: true })
-            break
-        default:
-            this.setState({ currentAction })
-        }
-    }
-
-    setSaveConfirmFlag (saveConfirmFlag) {
-        this.setState({ saveConfirmFlag })
-    }
-
-    setImportJson (e) {
-        if (e && e.target && e.target.files) {
-            this.setState({ importJson: e.target.files[0], importJsonFlag: false, currentAction: 'open' })
-        } else {
-            this.setState({ importJsonFlag: false })
-        }
+        return (this.state.canvas && this.state.canvas.getObjects().length > 1);
     }
 
     render () {
         return (<div className="main-container">
-            <MainMenuComponent setCurrentBrushType = {this.setCurrentBrushType}
-                setCurrentSize = {this.setCurrentSize}
-                setCurrentColor = {this.setCurrentColor}
-                setCurrentCanvasBackground = {this.setCurrentCanvasBackground}
-                setCurrentAction = {this.setCurrentAction}
-                color={this.state.currentColor}
-                size={this.state.currentSize}
-                canvasBackground={this.state.currentCanvasBackground}
+            <MainMenuComponent setCurrentState = {this.setCurrentState}
+                canvasBackground={this.state.canvasBackground}
                 drawingCanvasRef = {this.state.drawingCanvasRef}
-
+                color={this.state.color}
+                size={this.state.size}
             />
 
             <FabricComponent setCanvas={this.setCanvas}
+                setCurrentState = {this.setCurrentState}
                 canvas={this.state.canvas}
-                color={this.state.currentColor}
-                size={this.state.currentSize}
-                brushType = {this.state.currentBrushType}
-                canvasBackground={this.state.currentCanvasBackground}
-                currentBGImage = {this.state.currentBGImage}
-                passRef = {this.passRef}
-                action = {this.state.currentAction}
+                color={this.state.color}
+                size={this.state.size}
+                brushType = {this.state.brushType}
+                canvasBackground={this.state.canvasBackground}
+                currentBGImage = {this.state.BGImage}
+                action = {this.state.action}
+                brushType = {this.state.brushType}
+                canvasBackground={this.state.canvasBackground}
+                BGImage = {this.state.BGImage}
+                action = {this.state.action}
                 importJson = {this.state.importJson}
             />
 
-            <CustomModalComponent show={this.state.showImageUploadBox} closeCallBack = {this.setCurrentBGImage}>
-                <ImageUploadComponent setCurrentBGImage = {this.setCurrentBGImage}/>
+            <CustomModalComponent show={this.state.showImageUploadBox} closeCallBack = {(param) => this.setCurrentState({ showImageUploadBox: param })}>
+                <ImageUploadComponent setCurrentState = {this.setCurrentState}/>
             </CustomModalComponent>
 
-            <CustomModalComponent show={this.state.importJsonFlag} closeCallBack = {this.setImportJson}>
-                <ImportJsonComponent setImportJson = {this.setImportJson}/>
+            <CustomModalComponent show={this.state.importJsonFlag} closeCallBack = {(param) => this.setCurrentState({ importJsonFlag: param })}>
+                <ImportJsonComponent setCurrentState = {this.setCurrentState}/>
             </CustomModalComponent>
 
-            <CustomModalComponent show={this.state.saveConfirmFlag} closeCallBack = {() => this.setSaveConfirmFlag(false)}>
-                <ConfirmBoxComponent messgae="Do you want to save the changes?" button1="Yes" button2="No" button1CallBack={() => this.setCurrentAction('save')} button2Callback={() => this.setCurrentAction('new', true)} />
+            <CustomModalComponent show={this.state.saveConfirmFlag} closeCallBack = {() => this.setCurrentState({ saveConfirmFlag: false })}>
+                <ConfirmBoxComponent messgae="Do you want to clear all the changes?" button1="Yes" button2="No" button1CallBack={() => this.setCurrentState({ action: 'new' })} button2Callback={() => this.setCurrentState({ action: 'cancel-save' })} />
             </CustomModalComponent>
-        </div>)
+        </div>);
     }
 }
 
-export default App
+export default App;

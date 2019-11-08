@@ -1,16 +1,16 @@
-import React from 'react'
+import React from 'react';
 
 export default class customModalComponent extends React.Component {
     constructor (props) {
-        super(props)
-        this.close = this.close.bind(this)
+        super(props);
+        this.close = this.close.bind(this);
     }
 
     close (e) {
-        e.stopPropagation()
-        e.nativeEvent.stopImmediatePropagation()
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();
         if (e.target.classList.contains('model-box')) {
-            this.props.closeCallBack(null)
+            this.props.closeCallBack(null);
         }
     }
 
@@ -20,9 +20,9 @@ export default class customModalComponent extends React.Component {
                 <div className="model-box-body">
                     {this.props.children}
                 </div>
-            </div>)
+            </div>);
         } else {
-            return ''
+            return '';
         }
     }
 }

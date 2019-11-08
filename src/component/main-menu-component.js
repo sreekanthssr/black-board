@@ -1,56 +1,55 @@
-import React from 'react'
-import html2canvas from 'html2canvas'
+import React from 'react';
+import html2canvas from 'html2canvas';
 
 export default class MainMenuComponent extends React.Component {
     constructor (props) {
-        super(props)
-        this.state = { brushClass: 'fa-pen' }
-        this.menuClick = this.menuClick.bind(this)
-        this.setColorAndSize = this.setColorAndSize.bind(this)
-        this.setBrushType = this.setBrushType.bind(this)
-        this.setCurrentColor = this.setCurrentColor.bind(this)
-        this.setCurrentSize = this.setCurrentSize.bind(this)
-        this.setCanvasBackground = this.setCanvasBackground.bind(this)
+        super(props);
+        this.state = { brushClass: 'fa-pen' };
+        this.menuClick = this.menuClick.bind(this);
+        this.setColorAndSize = this.setColorAndSize.bind(this);
+        this.setBrushType = this.setBrushType.bind(this);
+        this.setColor = this.setColor.bind(this);
+        this.setSize = this.setSize.bind(this);
+        this.setCanvasBackground = this.setCanvasBackground.bind(this);
     }
 
     menuClick (e, type) {
-        this.props.setCurrentAction(type)
+        this.props.setCurrentState({ action: type });
     }
 
     setColorAndSize (e, size, color) {
-        this.props.setCurrentColor(color)
-        this.props.setCurrentSize(size)
+        this.props.setCurrentState({ size, color });
     }
 
-    setCurrentSize (e) {
-        this.props.setCurrentSize(e.target.value)
+    setSize (e) {
+        this.props.setCurrentState({ size: e.target.value });
     }
 
-    setCurrentColor (e) {
-        this.props.setCurrentColor(e.target.value)
+    setColor (e) {
+        this.props.setCurrentState({ color: e.target.value });
     }
 
     setBrushType (e, brush) {
-        let brushClass = 'fa-pen'
+        let brushClass = 'fa-pen';
         switch (brush) {
         case 'pencil':
-            brushClass = 'fa-pencil-alt'
-            break
+            brushClass = 'fa-pencil-alt';
+            break;
         case 'brush':
-            brushClass = 'fa-paint-brush'
-            break
+            brushClass = 'fa-paint-brush';
+            break;
         case 'highlighter':
-            brushClass = 'fa-highlighter'
-            break
+            brushClass = 'fa-highlighter';
+            break;
         default:
-            brushClass = 'fa-pen'
+            brushClass = 'fa-pen';
         }
-        this.setState({ brushClass })
-        this.props.setCurrentBrushType(brush)
+        this.setState({ brushClass });
+        this.props.setCurrentState({ brushType: brush });
     }
 
     setCanvasBackground (e, canvasBackground) {
-        this.props.setCurrentCanvasBackground(canvasBackground)
+        this.props.setCurrentState({ canvasBackground });
     }
 
     download () {
@@ -62,11 +61,11 @@ export default class MainMenuComponent extends React.Component {
                 backgroundColor: null
             })
             .then((canvas) => {
-                const link = document.createElement('a')
-                link.download = 'Notebook.png'
-                link.href = canvas.toDataURL('image/png')
-                link.click()
-            })
+                const link = document.createElement('a');
+                link.download = 'Notebook.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
     }
 
     render () {
@@ -83,7 +82,7 @@ export default class MainMenuComponent extends React.Component {
                             <li><i className={`fa fa-image ${(this.props.canvasBackground === 'image') ? 'paper-active' : ''}`} onClick={(e) => this.setCanvasBackground(e, 'image')}></i><div>Custom Image</div></li>
                         </ul>
                     </div>
-                    <div><i className="fa fa-file" onClick={(e) => this.menuClick(e, 'new')}></i></div>
+                    <div><i className="fa fa-file" onClick={(e) => this.menuClick(e, 'new-confirm')}></i></div>
                     <div><i className="fa fa-save" onClick={(e) => this.menuClick(e, 'save')}></i></div>
                     <div><i className="fa fa-file-import" onClick={(e) => this.menuClick(e, 'open')}></i></div>
                     <div><i className="fa fa-download" onClick={(e) => this.download(e, 'download')}></i></div>
@@ -102,11 +101,11 @@ export default class MainMenuComponent extends React.Component {
                     <div className="toolList">
                         <span className="size-span">{this.props.size}</span>
                         <ul>
-                            <li><input type="range" value={this.props.size} className="size-picker" min="1" max="50" onChange={(e) => this.setCurrentSize(e)}/></li>
+                            <li><input type="range" value={this.props.size} className="size-picker" min="1" max="50" onChange={(e) => this.setSize(e)}/></li>
                         </ul>
                     </div>
                     <div>
-                        <input className="color-picker" style={{ color: this.props.color }} type="color" value={this.props.color} onChange={(e) => this.setCurrentColor(e)}/>
+                        <input className="color-picker" style={{ color: this.props.color }} type="color" value={this.props.color} onChange={(e) => this.setColor(e)}/>
                     </div>
                     <div className="toolList">
                         <i className={`fa ${this.state.brushClass}`}></i>
@@ -122,6 +121,6 @@ export default class MainMenuComponent extends React.Component {
                 </div>
             </div>
 
-        )
+        );
     }
 }
