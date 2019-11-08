@@ -26,9 +26,15 @@ class App extends React.Component {
         });
     }
 
+    resetAction () {
+        this.setState({ action: null });
+    }
+
     setCurrentState (param) {
+        let actionFlag = false;
         if (param) {
             if (param.action) {
+                actionFlag = true;
                 this.setState({ saveConfirmFlag: false, action: null });
                 switch (param.action) {
                 case 'new-confirm':
@@ -68,8 +74,11 @@ class App extends React.Component {
                     this.setState({ BGImage: this.oldCanvasBackground.image, canvasBackground: this.oldCanvasBackground.type, showImageUploadBox: false });
                 }
             } else {
-                console.log(param);
                 this.setState(param);
+            }
+            if (!actionFlag) {
+                this.resetAction();
+                actionFlag = false;
             }
         }
     }
