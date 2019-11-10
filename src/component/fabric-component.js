@@ -17,7 +17,7 @@ export default class FabricComponent extends React.Component {
             backgroundColor: 'transparent',
             freeDrawingCursor: 'none'
         }), (canvas) => {
-            canvas.setDimensions({ width: '97vw', height: '101vh' }, { cssOnly: true });
+            canvas.setDimensions({ width: `${document.documentElement.offsetWidth}px`, height: `${document.documentElement.offsetHeight}px` }, { cssOnly: true });
             this.fabricBrush = new FabricBrush({
                 canvas: canvas,
                 color: this.props.color,

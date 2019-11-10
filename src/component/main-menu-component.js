@@ -106,9 +106,9 @@ export default class MainMenuComponent extends React.Component {
                     <div onClick={(e) => this.menuClick(e, 'open')}>
                         <i className="fa fa-file-import"></i>
                     </div>
-                    <div onClick={(e) => this.download(e, 'download')}>
+                    {/* <div onClick={(e) => this.download(e, 'download')}>
                         <i className="fa fa-download"></i>
-                    </div>
+                    </div> */}
                     <div onClick={(e) => this.menuClick(e, 'undo')}>
                         <i className="fa fa-undo"></i>
                     </div>
@@ -169,10 +169,10 @@ export default class MainMenuComponent extends React.Component {
                             </li>
                         </ul>
                     </div>
-                    <div>
+                    {/* <div>
                         <i className="fa fa-eraser" onClick={(e) => this.menuClick(e, 'eraser')}></i>
                     </div>
-                    {/* <div>
+                   <div>
                         <i className="fa fa-object-group" onClick={(e) => this.menuClick(e, 'select-area')}></i>
                     </div> */}
                 </div>
