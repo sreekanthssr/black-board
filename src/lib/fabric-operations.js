@@ -88,4 +88,11 @@ export default class FabricOperations {
             }
         }
     }
+
+    setHeight (heigth) {
+        if (this.options.canvas && heigth ) {
+            this.options.canvas.setDimensions({ width: `${1540}px`, height: `${heigth}px` }, { cssOnly: true, backstoreOnly: true });
+            console.log('test');
+        }
+    }
 }

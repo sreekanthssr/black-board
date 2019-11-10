@@ -172,9 +172,9 @@ export default class MainMenuComponent extends React.Component {
                     <div>
                         <i className="fa fa-eraser" onClick={(e) => this.menuClick(e, 'eraser')}></i>
                     </div>
-                    <div>
+                    {/* <div>
                         <i className="fa fa-object-group" onClick={(e) => this.menuClick(e, 'select-area')}></i>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 

@@ -110,6 +110,7 @@ class App extends React.Component {
                 BGImage = {this.state.BGImage}
                 action = {this.state.action}
                 importJson = {this.state.importJson}
+                drawingCanvasRef = {this.state.drawingCanvasRef}
             />
 
             <CustomModalComponent show={this.state.showImageUploadBox} closeCallBack = {(param) => this.setCurrentState({ showImageUploadBox: param })}>
