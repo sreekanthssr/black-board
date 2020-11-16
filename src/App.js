@@ -33,6 +33,7 @@ class App extends React.Component {
     setCurrentState (param) {
         let actionFlag = false;
         if (param) {
+            console.log(param);
             if (param.action) {
                 actionFlag = true;
                 this.setState({ saveConfirmFlag: false, action: null });
@@ -54,7 +55,8 @@ class App extends React.Component {
                 }
             } else if (param.importJson) {
                 if (param.importJson && param.importJson.target && param.importJson.target.files) {
-                    this.setState({ importJson: param.importJson.target.files[0], importJsonFlag: false, action: 'open' });
+                    actionFlag = true;
+                    this.setState({ action: 'open', importJson: param.importJson.target.files[0], importJsonFlag: false });
                 } else {
                     this.setState({ importJsonFlag: false });
                 }
@@ -108,7 +110,6 @@ class App extends React.Component {
                 brushType = {this.state.brushType}
                 canvasBackground={this.state.canvasBackground}
                 BGImage = {this.state.BGImage}
-                action = {this.state.action}
                 importJson = {this.state.importJson}
                 drawingCanvasRef = {this.state.drawingCanvasRef}
             />

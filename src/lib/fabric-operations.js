@@ -1,3 +1,4 @@
+import { fabric } from 'fabric';
 export default class FabricOperations {
     constructor (options) {
         this.cursor = null;
@@ -22,6 +23,9 @@ export default class FabricOperations {
             break;
         case 'open':
             this._open(param);
+            break;
+        case 'download':
+            this._download(param);
             break;
         default:
         }
@@ -75,10 +79,11 @@ export default class FabricOperations {
             try {
                 const reader = new FileReader();
                 reader.onload = (event) => {
-                    const json = JSON.parse(event.target.result);
-                    if (json.objects) {
-                        this.options.canvas.loadFromJSON(json, (obj) => {
-                            this.options.canvas.renderAll();
+                    const data = event.target.result;
+                    if (data) {
+                        fabric.loadSVGFromString(data, (objects, options) => {
+                            var obj = fabric.util.groupSVGElements(objects, options);
+                            this.options.canvas.add(obj).renderAll();
                         });
                     }
                 };
@@ -89,8 +94,22 @@ export default class FabricOperations {
         }
     }
 
+    _download () {
+        if (this.options.canvas) {
+            const svgData = this.options.canvas.toSVG();
+            const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+            const svgUrl = URL.createObjectURL(svgBlob);
+            const downloadLink = document.createElement('a');
+            downloadLink.href = svgUrl;
+            downloadLink.download = 'notebook.svg';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+    }
+
     setHeight (heigth) {
-        if (this.options.canvas && heigth ) {
+        if (this.options.canvas && heigth) {
             this.options.canvas.setDimensions({ width: `${1540}px`, height: `${heigth}px` }, { cssOnly: true, backstoreOnly: true });
             console.log('test');
         }

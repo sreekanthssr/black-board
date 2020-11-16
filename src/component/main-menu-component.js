@@ -1,5 +1,5 @@
 import React from 'react';
-import html2canvas from 'html2canvas';
+/* import html2canvas from 'html2canvas'; */
 
 export default class MainMenuComponent extends React.Component {
     constructor (props) {
@@ -53,7 +53,7 @@ export default class MainMenuComponent extends React.Component {
     }
 
     download () {
-        html2canvas(this.props.drawingCanvasRef,
+        /* html2canvas(this.props.drawingCanvasRef,
             {
                 allowTaint: true,
                 foreignObjectRendering: true,
@@ -65,7 +65,7 @@ export default class MainMenuComponent extends React.Component {
                 link.download = 'Notebook.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
-            });
+            }); */
     }
 
     render () {
@@ -106,9 +106,9 @@ export default class MainMenuComponent extends React.Component {
                     <div onClick={(e) => this.menuClick(e, 'open')}>
                         <i className="fa fa-file-import"></i>
                     </div>
-                    {/* <div onClick={(e) => this.download(e, 'download')}>
+                    <div onClick={(e) => this.menuClick(e, 'download')}>
                         <i className="fa fa-download"></i>
-                    </div> */}
+                    </div>
                     <div onClick={(e) => this.menuClick(e, 'undo')}>
                         <i className="fa fa-undo"></i>
                     </div>
